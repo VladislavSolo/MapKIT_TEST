@@ -7,8 +7,9 @@
 //
 
 #import "ViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface ViewController ()
+@interface ViewController () <MKMapViewDelegate>
 
 @end
 
@@ -22,6 +23,36 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - MKMapViewDelegate <NSObject>
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+    
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    
+}
+
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView {
+    
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
+    
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error {
+    
+}
+
+- (void)mapViewWillStartRenderingMap:(MKMapView *)mapView NS_AVAILABLE(10_9, 7_0) {
+    
+}
+
+- (void)mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered NS_AVAILABLE(10_9, 7_0) {
+    
 }
 
 @end
