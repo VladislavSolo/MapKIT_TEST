@@ -15,6 +15,8 @@
 		860C38E81B380593007FEBB1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 860C38E61B380593007FEBB1 /* LaunchScreen.xib */; };
 		860C38F41B380594007FEBB1 /* MapKIT_TESTTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 860C38F31B380594007FEBB1 /* MapKIT_TESTTests.m */; };
 		860C38FE1B3805DA007FEBB1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 860C38FD1B3805DA007FEBB1 /* MapKit.framework */; };
+		860C39011B3847EA007FEBB1 /* VSMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 860C39001B3847EA007FEBB1 /* VSMapAnnotation.m */; };
+		860C39041B385E39007FEBB1 /* UIView+MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 860C39031B385E39007FEBB1 /* UIView+MKAnnotationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,10 @@
 		860C38F21B380594007FEBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		860C38F31B380594007FEBB1 /* MapKIT_TESTTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapKIT_TESTTests.m; sourceTree = "<group>"; };
 		860C38FD1B3805DA007FEBB1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		860C38FF1B3847EA007FEBB1 /* VSMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSMapAnnotation.h; sourceTree = "<group>"; };
+		860C39001B3847EA007FEBB1 /* VSMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSMapAnnotation.m; sourceTree = "<group>"; };
+		860C39021B385E39007FEBB1 /* UIView+MKAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MKAnnotationView.h"; sourceTree = "<group>"; };
+		860C39031B385E39007FEBB1 /* UIView+MKAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MKAnnotationView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +72,10 @@
 		860C38C81B380593007FEBB1 = {
 			isa = PBXGroup;
 			children = (
-				860C38FD1B3805DA007FEBB1 /* MapKit.framework */,
 				860C38D31B380593007FEBB1 /* MapKIT_TEST */,
 				860C38F01B380594007FEBB1 /* MapKIT_TESTTests */,
 				860C38D21B380593007FEBB1 /* Products */,
+				860C38FD1B3805DA007FEBB1 /* MapKit.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +96,10 @@
 				860C38D91B380593007FEBB1 /* AppDelegate.m */,
 				860C38DE1B380593007FEBB1 /* ViewController.h */,
 				860C38DF1B380593007FEBB1 /* ViewController.m */,
+				860C38FF1B3847EA007FEBB1 /* VSMapAnnotation.h */,
+				860C39001B3847EA007FEBB1 /* VSMapAnnotation.m */,
+				860C39021B385E39007FEBB1 /* UIView+MKAnnotationView.h */,
+				860C39031B385E39007FEBB1 /* UIView+MKAnnotationView.m */,
 				860C38E41B380593007FEBB1 /* Images.xcassets */,
 				860C38E61B380593007FEBB1 /* LaunchScreen.xib */,
 				860C38D41B380593007FEBB1 /* Supporting Files */,
@@ -225,6 +235,8 @@
 			files = (
 				860C38DA1B380593007FEBB1 /* AppDelegate.m in Sources */,
 				860C38D71B380593007FEBB1 /* main.m in Sources */,
+				860C39041B385E39007FEBB1 /* UIView+MKAnnotationView.m in Sources */,
+				860C39011B3847EA007FEBB1 /* VSMapAnnotation.m in Sources */,
 				860C38E01B380593007FEBB1 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +364,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MapKIT_TEST/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -362,6 +375,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MapKIT_TEST/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

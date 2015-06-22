@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import <MapKit/MapKit.h>
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -16,6 +19,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager requestWhenInUseAuthorization];
+    
     // Override point for customization after application launch.
     return YES;
 }
