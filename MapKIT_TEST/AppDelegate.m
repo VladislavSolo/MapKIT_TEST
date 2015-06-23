@@ -22,7 +22,7 @@
     
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager requestWhenInUseAuthorization];
-    
+
     // Override point for customization after application launch.
     return YES;
 }

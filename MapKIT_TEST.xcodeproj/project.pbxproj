@@ -17,6 +17,7 @@
 		860C38FE1B3805DA007FEBB1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 860C38FD1B3805DA007FEBB1 /* MapKit.framework */; };
 		860C39011B3847EA007FEBB1 /* VSMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 860C39001B3847EA007FEBB1 /* VSMapAnnotation.m */; };
 		860C39041B385E39007FEBB1 /* UIView+MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 860C39031B385E39007FEBB1 /* UIView+MKAnnotationView.m */; };
+		866DFA6C1B39BD3600BCE112 /* VSStudent.m in Sources */ = {isa = PBXBuildFile; fileRef = 866DFA6B1B39BD3600BCE112 /* VSStudent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		860C39001B3847EA007FEBB1 /* VSMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSMapAnnotation.m; sourceTree = "<group>"; };
 		860C39021B385E39007FEBB1 /* UIView+MKAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MKAnnotationView.h"; sourceTree = "<group>"; };
 		860C39031B385E39007FEBB1 /* UIView+MKAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MKAnnotationView.m"; sourceTree = "<group>"; };
+		866DFA6A1B39BD3600BCE112 /* VSStudent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSStudent.h; sourceTree = "<group>"; };
+		866DFA6B1B39BD3600BCE112 /* VSStudent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSStudent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,7 @@
 		860C38D31B380593007FEBB1 /* MapKIT_TEST */ = {
 			isa = PBXGroup;
 			children = (
+				866DFA691B39BCAB00BCE112 /* Model */,
 				860C38E11B380593007FEBB1 /* Main.storyboard */,
 				860C38D81B380593007FEBB1 /* AppDelegate.h */,
 				860C38D91B380593007FEBB1 /* AppDelegate.m */,
@@ -131,6 +135,15 @@
 				860C38F21B380594007FEBB1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		866DFA691B39BCAB00BCE112 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				866DFA6A1B39BD3600BCE112 /* VSStudent.h */,
+				866DFA6B1B39BD3600BCE112 /* VSStudent.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +190,7 @@
 		860C38C91B380593007FEBB1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = VS;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Vlad Stanishevskij";
 				TargetAttributes = {
@@ -237,6 +251,7 @@
 				860C38D71B380593007FEBB1 /* main.m in Sources */,
 				860C39041B385E39007FEBB1 /* UIView+MKAnnotationView.m in Sources */,
 				860C39011B3847EA007FEBB1 /* VSMapAnnotation.m in Sources */,
+				866DFA6C1B39BD3600BCE112 /* VSStudent.m in Sources */,
 				860C38E01B380593007FEBB1 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +449,7 @@
 				860C38F91B380594007FEBB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		860C38FA1B380594007FEBB1 /* Build configuration list for PBXNativeTarget "MapKIT_TESTTests" */ = {
 			isa = XCConfigurationList;
@@ -442,6 +458,7 @@
 				860C38FC1B380594007FEBB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -10,19 +10,17 @@
 #import <MapKit/MapKit.h>
 #import "VSMapAnnotation.h"
 #import "UIView+MKAnnotationView.h"
+#import "VSStudent.h"
 
 static double delta = 20000;
-static double doubleDelta = 20000;
-
-@interface UIView (MKAnnotationView)
-
-@end
+static double doubleDelta = 40000;
 
 @interface ViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geoCoder;
 @property (strong, nonatomic) MKDirections *directions;
+@property (strong, nonatomic) NSMutableArray *arrayStudents;
 
 @end
 
@@ -47,9 +45,16 @@ static double doubleDelta = 20000;
     UIBarButtonItem* zoomButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                                                                target:self
                                                                                action:@selector(actionShowAll:)];
-    self.navigationItem.rightBarButtonItems = @[addButton, zoomButton];
+    
+    UIBarButtonItem* showStudentsButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
+                                                                                target:self
+                                                                                action:@selector(actionShowStudents:)];
+    
+    self.navigationItem.rightBarButtonItems = @[addButton, zoomButton, showStudentsButton];
     
     self.geoCoder = [[CLGeocoder alloc] init];
+    self.arrayStudents = [NSMutableArray array];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,10 +85,10 @@ static double doubleDelta = 20000;
 }
 
 - (void)actionAdd:(UIBarButtonItem *)sender {
-    
+
     VSMapAnnotation* annotation = [[VSMapAnnotation alloc] init];
-    annotation.title  = @"Test title";
-    annotation.subtitle = @"Test subtitle";
+    annotation.title  = @"Center point";
+    annotation.subtitle = @"Point subtitle";
     annotation.coordinate = self.mapView.region.center;
     
     [self.mapView addAnnotation:annotation]; 
@@ -109,97 +114,20 @@ static double doubleDelta = 20000;
     [self.mapView setVisibleMapRect:zoomRect edgePadding:UIEdgeInsetsMake(20, 20, 20, 20) animated:YES];
 }
 
-- (void) actionDescription:(UIButton *)sender {
+- (void)actionShowStudents:(UIBarButtonItem *)sender {
     
-    MKAnnotationView* annotationView = [sender superAnnotationView];
+    [self generateRandomStudents];
     
-    if (!annotationView) {
-        return;
-    }
-    
-    CLLocationCoordinate2D coordinate = annotationView.annotation.coordinate;
-    CLLocation* location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-    
-    if ([self.geoCoder isGeocoding]) {
-        [self.geoCoder cancelGeocode];
-    }
-    
-    [self.geoCoder reverseGeocodeLocation:location
-                   completionHandler:^(NSArray *placemarks, NSError *error) {
-                       
-                       NSString* message = nil;
-                       
-                       if (error) {
-                           
-                           message = [error localizedDescription];
-                       } else {
-                           
-                           if (placemarks.count > 0) {
-                               
-                               MKPlacemark* placeMark = [placemarks firstObject];
-                               message = [placeMark.addressDictionary description];
-                               
-                           } else {
-                               
-                               message = @"No placemarks";
-                           }
-                       }
-                       
-                       [self showAlertWithTitle:@"Location" andMessage:message];
-                       
-                   }];
-}
-
-- (void) actionDirection:(UIButton *)sender {
-    
-    MKAnnotationView* annotationView = [sender superAnnotationView];
-    
-    if (!annotationView) {
-        return;
-    }
-    
-    if ([self.directions isCalculating]) {
-        [self.directions cancel];
-    }
-    
-    CLLocationCoordinate2D coordinate = annotationView.annotation.coordinate;
-    
-    MKDirectionsRequest* request = [[MKDirectionsRequest alloc] init];
-    request.source = [MKMapItem mapItemForCurrentLocation];
-    
-    MKPlacemark* placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
-                                                   addressDictionary:nil];
-    
-    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark:placemark];
-    
-    request.destination = destination;
-    request.transportType = MKDirectionsTransportTypeAutomobile;
-    request.requestsAlternateRoutes = YES;
-    
-    self.directions = [[MKDirections alloc] initWithRequest:request];
-    
-    [self.directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+    for (VSStudent* student in self.arrayStudents) {
         
-        if (error) {
-            
-            [self showAlertWithTitle:@"Error" andMessage:[error localizedDescription]];
-        } else if ([response.routes count] == 0) {
-            
-            [self showAlertWithTitle:@"Error" andMessage:@"No routes found"];
-        } else {
-            
-            [self.mapView removeOverlays:[self.mapView overlays]];
-            
-            NSMutableArray* array = [NSMutableArray array];
-            
-            for (MKRoute* route in response.routes) {
-                [array addObject:route.polyline];
-            }
-            
-            [self.mapView addOverlays:array level:MKOverlayLevelAboveRoads];
-        }
+        VSMapAnnotation* annotation = [[VSMapAnnotation alloc] init];
+        annotation.title = student.firstName;
+        annotation.subtitle = student.lastName;
+        annotation.coordinate = student.coordinate;
         
-    }];
+        [self.mapView addAnnotation:annotation];
+    }
+    
 }
 
 #pragma mark - MKMapViewDelegate <NSObject>
@@ -261,6 +189,141 @@ static double doubleDelta = 20000;
         return renderer;
     }
     return nil;
+}
+
+#pragma mark - Actions
+
+- (void) actionDescription:(UIButton *)sender {
+    
+    MKAnnotationView* annotationView = [sender superAnnotationView];
+    
+    if (!annotationView) {
+        return;
+    }
+    
+    CLLocationCoordinate2D coordinate = annotationView.annotation.coordinate;
+    CLLocation* location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    
+    if ([self.geoCoder isGeocoding]) {
+        [self.geoCoder cancelGeocode];
+    }
+    
+    [self.geoCoder reverseGeocodeLocation:location
+                        completionHandler:^(NSArray *placemarks, NSError *error) {
+                            
+                            NSString* message = nil;
+                            
+                            if (error) {
+                                
+                                message = [error localizedDescription];
+                            } else {
+                                
+                                if (placemarks.count > 0) {
+                                    
+                                    MKPlacemark* placeMark = [placemarks firstObject];
+                                    message = [placeMark.addressDictionary description];
+                                    
+                                } else {
+                                    
+                                    message = @"No placemarks";
+                                }
+                            }
+                            
+                            [self showAlertWithTitle:@"Location" andMessage:message];
+                            
+                        }];
+}
+
+- (void) actionDirection:(UIButton *)sender {
+    
+    MKAnnotationView* annotationView = [sender superAnnotationView];
+    
+    if (!annotationView) {
+        return;
+    }
+    
+    if ([self.directions isCalculating]) {
+        [self.directions cancel];
+    }
+    
+    CLLocationCoordinate2D coordinate = annotationView.annotation.coordinate;
+    
+    MKDirectionsRequest* request = [[MKDirectionsRequest alloc] init];
+    request.source = [MKMapItem mapItemForCurrentLocation];
+    
+    MKPlacemark* placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+                                                   addressDictionary:nil];
+    
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark:placemark];
+    
+    request.destination = destination;
+    request.transportType = MKDirectionsTransportTypeAutomobile;
+    request.requestsAlternateRoutes = YES;
+    
+    self.directions = [[MKDirections alloc] initWithRequest:request];
+    
+    [self.directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        
+        if (error) {
+            
+            [self showAlertWithTitle:@"Error" andMessage:[error localizedDescription]];
+        } else if ([response.routes count] == 0) {
+            
+            [self showAlertWithTitle:@"Error" andMessage:@"No routes found"];
+        } else {
+            
+            [self.mapView removeOverlays:[self.mapView overlays]];
+            
+            NSMutableArray* array = [NSMutableArray array];
+            
+            for (MKRoute* route in response.routes) {
+                [array addObject:route.polyline];
+            }
+            
+            [self.mapView addOverlays:array level:MKOverlayLevelAboveRoads];
+        }
+        
+    }];
+}
+
+#pragma mark - VSStudents
+
+- (void)generateRandomStudents {
+    
+    NSArray* arrayFirstNames = @[@"Peter", @"Anton", @"Maksim", @"Vlad", @"Arkadiy", @"Yakov", @"Alex"];
+    NSArray* arrayLastNames = @[@"Kasperov", @"Stanishevskij", @"Antonov", @"Dosant", @"Sergeev", @"Drozdov", @"Ivanov", @"Pavlov"];
+    
+    for (int i = 0; i < 15; i ++) {
+        
+        int indexFirstName = arc4random() % (arrayFirstNames.count - 1);
+        int indexLstName = arc4random() % (arrayLastNames.count - 1);
+
+        NSString* firstName = arrayFirstNames[indexFirstName];
+        NSString* lastName = arrayLastNames[indexLstName];
+        
+        double latitude = [self randomAround:[[[self.mapView userLocation] location] coordinate].latitude];
+        double longitude = [self randomAround:[[[self.mapView userLocation] location] coordinate].longitude];
+        
+        VSStudent* student = [[VSStudent alloc] init];
+        student.firstName = firstName;
+        student.lastName = lastName;
+        student.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        
+        [self.arrayStudents addObject:student];
+        
+    }
+
+}
+
+- (double)randomAround:(double)value {
+
+    int intVal = (value - 2.0)* 1000000;
+    
+    int random = (intVal + arc4random() % 4000000);
+    
+    double answer = random/(double)1000000;
+    
+    return answer;
 }
 
 
